@@ -134,7 +134,6 @@
 				function start() {
 					var index = 0;
 					var tId = null;
-					//doc.find("em").addClass("show");
 					doc = doc.find("span")
 					doc.addClass("show");
 					tId = setInterval(function(){
@@ -159,6 +158,10 @@
 				$(".cmd").keydown(function(e) {
 					if (event.keyCode == 13) {
 						var key = $(".cmd").val();
+						if (!key || key.trim().length < 1) {
+							return;
+						}
+						key = key.trim();
 						if (key == 'clear') {
 							var len = $(".content li").length;
 							for (var j = 0;j < len - 1; ++j) {
@@ -173,12 +176,11 @@
 							$(".content .last").before(li);
 							if ($(".content li").length > 12) {
 								var a = $(".content li").eq(0);
-								if (a.children().length > 1) {
-									a.remove();
-								} else {
-									a.remove();
+								var L = a.children().length;
+								a.remove();
+								if (L < 2) {
 									$(".content li").eq(0).remove();
-								}
+								}						
 							}
 						}
 						$(".cmd").val('');
